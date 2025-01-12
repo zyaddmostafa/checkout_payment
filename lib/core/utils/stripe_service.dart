@@ -18,11 +18,17 @@ class StripeService {
     return paymentIntentModel;
   }
 
+// set up the payment sheet
   Future initPaymentSheet({required String paymentIntentClientSecret}) async {
     Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
       paymentIntentClientSecret: paymentIntentClientSecret,
       merchantDisplayName: 'Zyad',
     ));
+  }
+
+// display the payment sheet
+  Future displayPaymentSheet() async {
+    Stripe.instance.presentPaymentSheet();
   }
 }
