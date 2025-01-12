@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-feature android:glEsVersion="0x00020000" android:required="true" />
     <application
+        android:hardwareAccelerated="true"
         android:label="checkout_payment_ui"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

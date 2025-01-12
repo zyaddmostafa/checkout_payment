@@ -39,23 +39,43 @@ class StripeService {
 
   Future makePayment(
       {required PaymentIntentInputModel paymentIntentInputModel}) async {
-    var paymentIntentModel = await createPaymentIntent(paymentIntentInputModel);
-    var ephmeralKeyModel =
-        await createEphmeralKey(customid: paymentIntentInputModel.customerId);
-    var initPaymentSheetInputModel = InitPaymentSheetInputModel(
-        clientSecret: paymentIntentModel.clientSecret!,
-        ephmeralKeySecret: ephmeralKeyModel.id!,
-        customerId: paymentIntentInputModel.customerId);
-    await initPaymentSheet(
-        initPaymentSheetInputModel: initPaymentSheetInputModel);
-    await displayPaymentSheet();
+    try {
+      print('Creating payment intent...');
+      var paymentIntentModel =
+          await createPaymentIntent(paymentIntentInputModel);
+      print(
+          'Payment intent created successfully: ${paymentIntentModel.clientSecret}');
+
+      print('Creating ephemeral key...');
+      var ephmeralKeyModel =
+          await createEphmeralKey(customid: paymentIntentInputModel.customerId);
+      print('Ephemeral key created successfully: ${ephmeralKeyModel.id}');
+
+      var initPaymentSheetInputModel = InitPaymentSheetInputModel(
+          clientSecret: paymentIntentModel.clientSecret!,
+          ephmeralKeySecret: ephmeralKeyModel.secret!,
+          customerId: paymentIntentInputModel.customerId);
+
+      print('Initializing payment sheet...');
+      await initPaymentSheet(
+          initPaymentSheetInputModel: initPaymentSheetInputModel);
+      print('Payment sheet initialized successfully');
+
+      print('Displaying payment sheet...');
+      await displayPaymentSheet();
+      print('Payment completed successfully');
+    } catch (e, stackTrace) {
+      print('Error in makePayment: $e');
+      print('Stack trace: $stackTrace');
+      throw e;
+    }
   }
 
   Future<EphmeralKeyModel> createEphmeralKey({required String customid}) async {
     var response = await apiService.post(
         contentType: Headers.formUrlEncodedContentType,
         body: {'customer': customid},
-        url: ' https://api.stripe.com/v1/ephemeral_keys',
+        url: 'https://api.stripe.com/v1/ephemeral_keys',
         token: ApiKeys.secrtKey,
         headers: {
           'Stripe-Version': '2024-12-18.acacia',
