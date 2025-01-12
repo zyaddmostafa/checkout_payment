@@ -4,6 +4,6 @@ abstract class Failure {
   Failure(this.errmessnage);
 }
 
-class ServerError extends Failure {
-  ServerError(String errmessnage) : super(errmessnage);
+class ServerFailure extends Failure {
+  ServerFailure({required String errmessnage}) : super(errmessnage);
 }
