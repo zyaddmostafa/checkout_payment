@@ -7,15 +7,17 @@ class ApiService {
       {required Map<String, dynamic> body,
       required String url,
       required String token,
+      Map<String, String>? headers,
       String? contentType}) async {
     var response = await dio.post(
       url,
       data: body, // Convert the model to JSON before sending
       options: Options(
         contentType: contentType,
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
+        headers: headers ??
+            {
+              'Authorization': 'Bearer $token',
+            },
       ),
     );
 
