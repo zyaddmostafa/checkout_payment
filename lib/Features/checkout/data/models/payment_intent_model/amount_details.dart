@@ -1,17 +1,17 @@
 import 'tip.dart';
 
 class AmountDetails {
-	Tip? tip;
+  Tip? tip;
 
-	AmountDetails({this.tip});
+  AmountDetails({this.tip});
 
-	factory AmountDetails.fromJson(Map<String, dynamic> json) => AmountDetails(
-				tip: json['tip'] == null
-						? null
-						: Tip.fromJson(json['tip'] as Map<String, dynamic>),
-			);
+  factory AmountDetails.fromJson(Map<String, dynamic> json) => AmountDetails(
+        tip: json['tip'] == null
+            ? null
+            : Tip.fromJson(json['tip'] as Map<String, dynamic>),
+      );
 
-	Map<String, dynamic> toJson() => {
-				'tip': tip?.toJson(),
-			};
+  Map<String, dynamic> toJson() => {
+        'tip': tip?.toJson(),
+      };
 }
