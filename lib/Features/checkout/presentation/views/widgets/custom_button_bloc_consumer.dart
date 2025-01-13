@@ -67,10 +67,6 @@ class CustomButtonBlocConsumer extends StatelessWidget {
                       }
                     },
                     "description": "The payment transaction description.",
-                    // "payment_options": {
-                    //   "allowed_payment_method":
-                    //       "INSTANT_FUNDING_SOURCE"
-                    // },
                     "item_list": {
                       "items": [
                         {
